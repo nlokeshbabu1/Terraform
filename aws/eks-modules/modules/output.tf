@@ -16,6 +16,6 @@ output "vpc_cidr_block" {
 
 
 output "public_subnet" {
-  value = aws_subnet.eks-public.cidr_block[0]
+  value = aws_subnet.eks-public.cidr_block[count.index]
   
 }
