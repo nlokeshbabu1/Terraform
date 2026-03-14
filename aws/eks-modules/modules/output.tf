@@ -9,6 +9,11 @@ output "eks-cluster_version" {
 }
 
 
+output "vpc_name" {
+  value = aws_vpc.eks-aws_vpc
+  
+}
+
 output "vpc_cidr_block" {
   value = var.vpc_cidr_block
   
