@@ -89,4 +89,39 @@ resource "aws_iam_role_policy_attachment" "eks_ebs" {
 
 
 
+/*
+##we are create IRSA #######
+
+resource "aws_iam_openid_connect_provider" "eks_oidc" {
+  client_id_list  = ["sts.amazonaws.com"]
+  thumbprint_list = [data.aws_eks_cluster.eks_cluster.certificate_authority[0].data]
+  url             = data.aws_eks_cluster.eks_cluster.identity[0].oidc[0].issuer
+}
+
+
+###Role for IRSA####
+
+resource "aws_iam_role" "vpc_cni_role" {
+  name = "eks-addon-vpc-cni-role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = {
+          Federated = aws_iam_openid_connect_provider.eks_oidc.arn
+        },
+        Action = "sts:AssumeRoleWithWebIdentity",
+        Condition = {
+          StringEquals = {
+            "${replace(data.aws_eks_cluster.eks_cluster.identity[0].oidc[0].issuer, "https://", "")}:sub" = "system:serviceaccount:kube-system:aws-node"
+          }
+        }
+      }
+    ]
+  })
+}
+
+*/
+
 
